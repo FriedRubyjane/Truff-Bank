@@ -1,19 +1,29 @@
 import React, { FC } from 'react'
 import { ImageBackground, Pressable, Text, View } from 'react-native'
-import { styles } from '../../../../styles/storiesItem'
+import tailwind from 'tailwind-rn'
 import { IStory } from './types'
 
 const StoryItem: FC<{ story: IStory }> = ({ story }) => {
 	return (
 		<Pressable onPress={() => {}}>
-			<View style={styles.wrapper}>
+			<View
+				style={{
+					...tailwind(
+						'w-24 h-24 rounded-2xl ml-4 border-solid border-blue-400'
+					),
+					padding: 2,
+					borderWidth: 1,
+				}}
+			>
 				<ImageBackground
 					source={{ uri: story.images[0] }}
 					resizeMode='cover'
-					style={styles.image}
-					imageStyle={styles.imageStyle}
+					style={tailwind('w-full h-full justify-end')}
+					imageStyle={tailwind('rounded-xl')}
 				>
-					<Text style={styles.title}>{story.heading}</Text>
+					<Text style={{ ...tailwind('text-white'), fontSize: 12, margin: 8 }}>
+						{story.heading}
+					</Text>
 				</ImageBackground>
 			</View>
 		</Pressable>
