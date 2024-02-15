@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100%',
-		width: 480,
+		width: '100%',
+		maxWidth: 480,
 		margin: 'auto',
 	},
 	form: {

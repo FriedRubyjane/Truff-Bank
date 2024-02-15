@@ -3,8 +3,9 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
 	wrapper: {
 		margin: 'auto',
-		width: 480,
 		height: '100%',
+		width: '100%',
+		maxWidth: 480,
 	},
 	updateSuccessView: {
 		backgroundColor: 'rgb(34 197 94)',
