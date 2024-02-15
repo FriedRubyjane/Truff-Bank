@@ -1,6 +1,6 @@
 import { addDoc, collection } from '@firebase/firestore'
 import { User, onAuthStateChanged } from 'firebase/auth'
-import {
+import React, {
 	FC,
 	PropsWithChildren,
 	createContext,
@@ -21,23 +21,26 @@ interface IContext {
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
-export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
+export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null)
 	const [isLoadingInitial, setIsLoadingInitial] = useState(true)
 	const [isLoading, setIsLoading] = useState(false)
 
 	const registerHandler = async (email: string, password: string) => {
 		setIsLoading(true)
-
 		try {
 			const { user } = await register(email, password)
 
-			await addDoc(collection(db, 'users'), {
-				_id: user.uid,
-				displayName: 'Без имени',
-			})
+			try {
+				await addDoc(collection(db, 'users'), {
+					_id: user.uid,
+					displayName: 'Без имени',
+				})
+			} catch (error: any) {
+				console.log(`Ошибка добавления в базу данных: ${error}`)
+			}
 		} catch (error: any) {
-			Alert.alert('Ошибка регистрации: ', error)
+			Alert.alert('Ошибка регистрации:', error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -45,11 +48,10 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	const loginHandler = async (email: string, password: string) => {
 		setIsLoading(true)
-
 		try {
 			await login(email, password)
 		} catch (error: any) {
-			Alert.alert('Ошибка входа: ', error)
+			Alert.alert('Ошибка входа:', error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -57,11 +59,10 @@ export const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 	const logoutHandler = async () => {
 		setIsLoading(true)
-
 		try {
 			await logout()
 		} catch (error: any) {
-			Alert.alert('Ошибка выхода: ', error)
+			Alert.alert('Ошибка выхода:', error)
 		} finally {
 			setIsLoading(false)
 		}
