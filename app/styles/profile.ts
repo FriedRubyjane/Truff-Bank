@@ -2,10 +2,15 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
 	wrapper: {
-		margin: 'auto',
+		justifyContent: 'center',
+		alignItems: 'center',
 		height: '100%',
 		width: '100%',
 		maxWidth: 480,
+		margin: 'auto',
+	},
+	form: {
+		width: '75%',
 	},
 	updateSuccessView: {
 		backgroundColor: 'rgb(34 197 94)',
