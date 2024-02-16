@@ -1,7 +1,7 @@
 import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import React, { FC } from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import tailwind from 'tailwind-rn'
 import Avatar from '../../ui/Avatar'
 import Loader from '../../ui/Loader'
@@ -15,20 +15,24 @@ const Header: FC = () => {
 	return isLoading ? (
 		<Loader />
 	) : (
-		<Padding style={tailwind('flex-row items-center')}>
-			<Avatar name={name} />
-			<TouchableOpacity
-				onPress={() => navigate('Profile')}
-				style={tailwind('flex-row items-end')}
-			>
-				<Text style={tailwind('text-2xl text-gray-800 font-bold')}>{name}</Text>
-				<Entypo
-					name='chevron-small-right'
-					size={28}
-					style={tailwind('text-gray-800')}
-				/>
-			</TouchableOpacity>
-		</Padding>
+		<View style={{ margin: 'auto' }}>
+			<Padding style={tailwind('flex-row items-center')}>
+				<Avatar name={name} />
+				<TouchableOpacity
+					onPress={() => navigate('Profile')}
+					style={tailwind('flex-row items-end')}
+				>
+					<Text style={tailwind('text-2xl text-gray-800 font-bold')}>
+						{name}
+					</Text>
+					<Entypo
+						name='chevron-small-right'
+						size={28}
+						style={tailwind('text-gray-800')}
+					/>
+				</TouchableOpacity>
+			</Padding>
+		</View>
 	)
 }
 

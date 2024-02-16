@@ -1,17 +1,17 @@
 import React, { FC } from 'react'
-import { Text, View } from 'react-native'
 import Layout from '../../layout/Layout'
 import Header from './Header'
+import Accounts from './accounts/Accounts'
+import ApplyNewProduct from './apply-new-products/ApplyNewProduct'
 import Stories from './stories/Stories'
 
 const Home: FC = () => {
 	return (
 		<Layout>
-			<View style={{ margin: 'auto', width: 480, height: '100%' }}>
-				<Header />
-				<Stories />
-				<Text>Home</Text>
-			</View>
+			<Header />
+			<Stories />
+			<Accounts />
+			<ApplyNewProduct />
 		</Layout>
 	)
 }

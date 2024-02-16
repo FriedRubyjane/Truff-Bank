@@ -9,16 +9,18 @@ const Stories: FC = () => {
 	const { stories, isLoading } = useStories()
 
 	return (
-		<View style={tailwind('my-7')}>
-			{isLoading ? (
-				<Loader />
-			) : (
-				<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-					{stories.map(story => (
-						<StoryItem key={story._id} story={story} />
-					))}
-				</ScrollView>
-			)}
+		<View style={{ margin: 'auto' }}>
+			<View style={tailwind('my-7')}>
+				{isLoading ? (
+					<Loader />
+				) : (
+					<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+						{stories.map(story => (
+							<StoryItem key={story._id} story={story} />
+						))}
+					</ScrollView>
+				)}
+			</View>
 		</View>
 	)
 }

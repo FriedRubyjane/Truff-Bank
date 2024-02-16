@@ -1,11 +1,14 @@
 import React, { FC } from 'react'
 import { ImageBackground, Pressable, Text, View } from 'react-native'
 import tailwind from 'tailwind-rn'
+import { useData } from '../../../../hooks/useData'
 import { IStory } from './types'
 
 const StoryItem: FC<{ story: IStory }> = ({ story }) => {
+	const { setActiveStories } = useData()
+
 	return (
-		<Pressable onPress={() => {}}>
+		<Pressable onPress={() => setActiveStories(story.images)}>
 			<View
 				style={{
 					...tailwind(
