@@ -1,40 +1,110 @@
-import React, { FC } from 'react'
-import { Alert, View } from 'react-native'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import React, { FC, useState } from 'react'
+import { Modal, Text, TouchableOpacity, View } from 'react-native'
+import { db } from '../../../../firebase'
+import { useAuth } from '../../../../hooks/useAuth'
+import { getRandomCardNumber } from '../../../../utils/getRandomCardNumber'
 import Button from '../../../ui/Button'
-import { asyncAlert } from './asyncAlert'
 
 const ApplyNewProduct: FC = () => {
+	const { user } = useAuth()
+
+	const [cardType, setCardType] = useState('Truff Black')
+	const [currency, setCurrency] = useState('RUB')
+	const [modalVisible, setModalVisible] = useState(false)
+
 	const registerHandler = async () => {
 		try {
-			const currency = await asyncAlert({
-				title: 'Валюта',
-				message: 'Выберите валюту',
-				buttons: {
-					text: 'RUB',
-					resolveValue: 'RUB',
-					textSecond: 'USD',
-					resolveValueSecond: 'USD',
-				},
-			})
+			setModalVisible(!modalVisible)
 
-			console.log('Currency: ', currency)
+			await addDoc(collection(db, 'accounts'), {
+				userId: user?.uid,
+				timestamp: serverTimestamp(),
+				cardNumber: getRandomCardNumber(),
+				cardName: cardType,
+				currency: currency,
+				balance: 0,
+			})
 		} catch (error: any) {
-			Alert.alert('Ошибка заказа', error)
+			console.log('Ошибка заказа', error)
 		}
 	}
 
 	return (
-		<View
-			style={{
-				width: '100%',
-				maxWidth: 352.5,
-				margin: 'auto',
-				marginTop: 24,
-				paddingRight: 16,
-				paddingLeft: 16,
-			}}
-		>
-			<Button onPress={registerHandler} title='Заказать новую карту' />
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<View
+				style={{
+					width: '100%',
+					maxWidth: 352.5,
+					margin: 'auto',
+					marginTop: 24,
+					paddingRight: 16,
+					paddingLeft: 16,
+				}}
+			>
+				<Button
+					onPress={() => setModalVisible(true)}
+					title='Заказать новую карту'
+				/>
+			</View>
+			<Modal
+				animationType='slide'
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => {
+					setModalVisible(!modalVisible)
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'rgba(0,0,0,0.5)',
+					}}
+				>
+					<View style={{ backgroundColor: 'white', padding: 20 }}>
+						<View>
+							<Text>Выберите валюту:</Text>
+							<TouchableOpacity onPress={() => setCurrency('RUB')}>
+								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+									<Text>RUB</Text>
+									{currency === 'RUB' && <Text>(Выбрана)</Text>}
+								</View>
+							</TouchableOpacity>
+							<TouchableOpacity onPress={() => setCurrency('USD')}>
+								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+									<Text>USD</Text>
+									{currency === 'USD' && <Text>(Выбрана)</Text>}
+								</View>
+							</TouchableOpacity>
+						</View>
+						<View style={{ marginTop: 12 }}>
+							<Text>Выберите тип карты:</Text>
+							<TouchableOpacity onPress={() => setCardType('Truff Black')}>
+								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+									<Text>Black</Text>
+									{cardType === 'Truff Black' && <Text>(Выбран)</Text>}
+								</View>
+							</TouchableOpacity>
+							<TouchableOpacity
+								onPress={() => setCardType('Truff All Airlines')}
+							>
+								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+									<Text>All Airlines</Text>
+									{cardType === 'All Airlines' && <Text>(Выбран)</Text>}
+								</View>
+							</TouchableOpacity>
+						</View>
+						<Button onPress={registerHandler} title='Заказать' />
+						<Button
+							onPress={() => setModalVisible(false)}
+							title='Отменить'
+							colors={['bg-gray-200', '#D6D8DB']}
+						/>
+					</View>
+				</View>
+			</Modal>
 		</View>
 	)
 }

@@ -13,7 +13,7 @@ export const useAccounts = () => {
 	useEffect(
 		() =>
 			onSnapshot(
-				query(collection(db, 'accounts'), where('useId', '==', user?.uid)),
+				query(collection(db, 'accounts'), where('userId', '==', user?.uid)),
 				snapshot => {
 					setAccounts(
 						snapshot.docs.map(
