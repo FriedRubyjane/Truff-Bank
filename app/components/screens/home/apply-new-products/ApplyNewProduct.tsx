@@ -92,7 +92,7 @@ const ApplyNewProduct: FC = () => {
 							>
 								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 									<Text>All Airlines</Text>
-									{cardType === 'All Airlines' && <Text>(Выбран)</Text>}
+									{cardType === 'Truff All Airlines' && <Text>(Выбран)</Text>}
 								</View>
 							</TouchableOpacity>
 						</View>
