@@ -1,19 +1,22 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Pressable, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
+import { TypeRootStackParamList } from '../../../navigation/types'
 import { styles } from '../../../styles/navItem'
 import { IFooterItem } from './types'
 
 interface INavItem {
 	item: IFooterItem
+	navigate: (screenName: keyof TypeRootStackParamList) => void
+	currentRoute: string
 }
 
-const NavItem: FC<INavItem> = ({ item }) => {
-	const [isActive, setIsActive] = useState(false)
+const NavItem: FC<INavItem> = ({ item, currentRoute, navigate }) => {
+	const isActive = currentRoute === item.title
 
 	return (
-		<Pressable onPress={() => {}} style={styles.wrapper}>
+		<Pressable onPress={() => navigate(item.title)} style={styles.wrapper}>
 			<AntDesign
 				name={item.iconName}
 				style={tailwind(

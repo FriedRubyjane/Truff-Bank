@@ -1,6 +1,9 @@
-import { NavigationContainer } from '@react-navigation/native'
+import {
+	NavigationContainer,
+	useNavigationContainerRef,
+} from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { View } from 'react-native'
 import Footer from '../components/layout/footer/Footer'
 import Auth from '../components/screens/auth/Auth'
@@ -16,6 +19,25 @@ const Stack = createNativeStackNavigator()
 
 const Navigation: FC = () => {
 	const { user } = useAuth()
+	const ref = useNavigationContainerRef()
+
+	const [name, setName] = useState<string | undefined>(undefined)
+
+	useEffect(() => {
+		const timeOut = setTimeout(() => setName(ref.getCurrentRoute()?.name), 100)
+
+		return () => clearTimeout(timeOut)
+	}, [])
+
+	useEffect(() => {
+		const listener = ref.addListener('state', () =>
+			setName(ref.getCurrentRoute()?.name)
+		)
+
+		return () => {
+			ref.removeListener('state', listener)
+		}
+	}, [])
 
 	return (
 		<View
@@ -23,7 +45,7 @@ const Navigation: FC = () => {
 				flex: 1,
 			}}
 		>
-			<NavigationContainer>
+			<NavigationContainer ref={ref}>
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					{user ? (
 						<>
@@ -39,7 +61,9 @@ const Navigation: FC = () => {
 					)}
 				</Stack.Navigator>
 			</NavigationContainer>
-			<View style={{ alignItems: 'center' }}>{user && <Footer />}</View>
+			<View style={{ alignItems: 'center' }}>
+				{user && name && <Footer navigate={ref.navigate} currentRoute={name} />}
+			</View>
 		</View>
 	)
 }
