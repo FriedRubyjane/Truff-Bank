@@ -9,7 +9,7 @@ const Accounts: FC = () => {
 	const { accounts, isLoading } = useAccounts()
 
 	return (
-		<View style={{ margin: 'auto' }}>
+		<View style={{ margin: 'auto', width: '100%', maxWidth: 420 }}>
 			<Padding>
 				{isLoading ? (
 					<Loader />

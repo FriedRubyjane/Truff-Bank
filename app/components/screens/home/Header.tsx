@@ -15,7 +15,7 @@ const Header: FC = () => {
 	return isLoading ? (
 		<Loader />
 	) : (
-		<View style={{ margin: 'auto' }}>
+		<View style={{ margin: 'auto', width: '100%', maxWidth: 420 }}>
 			<Padding style={tailwind('flex-row items-center')}>
 				<Avatar name={name} />
 				<TouchableOpacity

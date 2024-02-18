@@ -1,11 +1,15 @@
 import React, { FC } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import Layout from '../../layout/Layout'
+import Heading from '../../ui/Heading'
 
 const Payments: FC = () => {
 	return (
-		<View>
-			<Text>Payments</Text>
-		</View>
+		<Layout>
+			<View style={{ margin: 'auto', width: '100%', maxWidth: 420 }}>
+				<Heading text='Payment' />
+			</View>
+		</Layout>
 	)
 }
 

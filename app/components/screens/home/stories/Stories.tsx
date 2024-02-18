@@ -9,7 +9,7 @@ const Stories: FC = () => {
 	const { stories, isLoading } = useStories()
 
 	return (
-		<View style={{ margin: 'auto' }}>
+		<View style={{ margin: 'auto', width: '100%', maxWidth: 420 }}>
 			<View style={tailwind('my-7')}>
 				{isLoading ? (
 					<Loader />
