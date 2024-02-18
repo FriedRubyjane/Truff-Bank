@@ -14,12 +14,12 @@ import { IAccount } from '../../home/accounts/types'
 import { handleTransfer } from '../handleTransfer'
 import { IContact } from './types'
 
-const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
-	contact,
+const ContactItem: FC<{ contacts: IContact[]; accounts: IAccount[] }> = ({
+	contacts,
 	accounts,
 }) => {
 	const [fromAccount, setFromAccount] = useState<IAccount>(accounts[0])
-	const [whereCard, setWhereCard] = useState()
+	const [whereCard, setWhereCard] = useState<IContact>(contacts[0])
 
 	const [sum, setSum] = useState('')
 	const [modalVisible, setModalVisible] = useState(false)
@@ -31,7 +31,7 @@ const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
 
 	const handleSubmit = () => {
 		try {
-			handleTransfer(sum, fromAccount, contact.cardNumber)
+			handleTransfer(sum, fromAccount, whereCard.cardNumber)
 		} catch (error: any) {
 			console.log('Ошибка отправки:', error)
 		}
@@ -42,8 +42,8 @@ const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
 	return (
 		<>
 			<Pressable style={styles.wrapper} onPress={() => setModalVisible(true)}>
-				<Avatar size='large' name={contact.displayName} />
-				<Text style={styles.text}>{contact.displayName}</Text>
+				<Avatar size='large' name={whereCard.displayName} />
+				<Text style={styles.text}>{whereCard.displayName}</Text>
 			</Pressable>
 			<Modal
 				animationType='slide'
@@ -71,7 +71,7 @@ const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
 							/>
 						</View>
 						<View style={{ marginTop: 12 }}>
-							<Text>Выберите вашу карту:</Text>
+							<Text>Перевести с вашей карты:</Text>
 							<View>
 								{accounts.map(account => (
 									<TouchableOpacity
@@ -83,6 +83,26 @@ const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
 										>
 											<Text>{account.cardNumber}</Text>
 											{fromAccount.cardNumber === account.cardNumber && (
+												<Text>(Выбрана)</Text>
+											)}
+										</View>
+									</TouchableOpacity>
+								))}
+							</View>
+						</View>
+						<View style={{ marginTop: 12 }}>
+							<Text>На карту другого пользователя:</Text>
+							<View>
+								{contacts.map(contact => (
+									<TouchableOpacity
+										key={contact._id}
+										onPress={() => setWhereCard(contact)}
+									>
+										<View
+											style={{ flexDirection: 'row', alignItems: 'center' }}
+										>
+											<Text>{contact.cardNumber}</Text>
+											{whereCard.cardNumber === contact.cardNumber && (
 												<Text>(Выбрана)</Text>
 											)}
 										</View>

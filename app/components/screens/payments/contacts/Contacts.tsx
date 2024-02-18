@@ -9,7 +9,7 @@ import { useContacts } from './useContacts'
 
 const Contacts: FC = () => {
 	const { accounts } = useAccounts()
-	const { contacts, isLoading } = useContacts()
+	const { contacts, contactsView, isLoading } = useContacts()
 
 	return (
 		<View style={styles.wrapper}>
@@ -22,10 +22,10 @@ const Contacts: FC = () => {
 					showsVerticalScrollIndicator={false}
 					style={styles.scroll}
 				>
-					{contacts.map(contact => (
+					{contactsView.map(contact => (
 						<ContactItem
 							key={contact._id}
-							contact={contact}
+							contacts={contacts}
 							accounts={accounts}
 						/>
 					))}

@@ -14,6 +14,7 @@ import { IContact } from './types'
 export const useContacts = () => {
 	const { user } = useAuth()
 	const [contacts, setContacts] = useState<IContact[]>([])
+	const [contactsView, setContactsView] = useState<IContact[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(
@@ -46,7 +47,9 @@ export const useContacts = () => {
 						})
 					)
 
-					setContacts(
+					setContacts(contactsFire)
+
+					setContactsView(
 						contactsFire
 							.filter(
 								(v, i, a) =>
@@ -61,5 +64,5 @@ export const useContacts = () => {
 		[]
 	)
 
-	return { contacts, isLoading }
+	return { contacts, contactsView, isLoading }
 }
