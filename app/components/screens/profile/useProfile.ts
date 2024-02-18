@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { db } from '../../../firebase'
 import { useAuth } from '../../../hooks/useAuth'
 
-interface IProfile {
+export interface IProfile {
 	_id: string
 	displayName: string
 	docId: string
