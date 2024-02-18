@@ -1,11 +1,12 @@
 import React, { FC } from 'react'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
+import Layout from '../../layout/Layout'
 
 const Services: FC = () => {
 	return (
-		<View>
-			<Text>Services</Text>
-		</View>
+		<Layout>
+			<Text>Москва</Text>
+		</Layout>
 	)
 }
 
