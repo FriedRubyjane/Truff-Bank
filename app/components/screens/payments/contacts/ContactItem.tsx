@@ -1,14 +1,25 @@
 import React, { FC, useState } from 'react'
-import { Modal, Pressable, Text, TextInput, View } from 'react-native'
+import {
+	Modal,
+	Pressable,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import { styles } from '../../../../styles/contactItem'
 import Avatar from '../../../ui/Avatar'
 import Button from '../../../ui/Button'
-import { useAccounts } from '../../home/accounts/useAccounts'
+import { IAccount } from '../../home/accounts/types'
 import { handleTransfer } from '../handleTransfer'
 import { IContact } from './types'
 
-const ContactItem: FC<{ contact: IContact }> = ({ contact }) => {
-	const { accounts } = useAccounts()
+const ContactItem: FC<{ contact: IContact; accounts: IAccount[] }> = ({
+	contact,
+	accounts,
+}) => {
+	const [fromAccount, setFromAccount] = useState<IAccount>(accounts[0])
+	const [whereCard, setWhereCard] = useState()
 
 	const [sum, setSum] = useState('')
 	const [modalVisible, setModalVisible] = useState(false)
@@ -20,7 +31,7 @@ const ContactItem: FC<{ contact: IContact }> = ({ contact }) => {
 
 	const handleSubmit = () => {
 		try {
-			handleTransfer(sum, accounts[0], contact.cardNumber)
+			handleTransfer(sum, fromAccount, contact.cardNumber)
 		} catch (error: any) {
 			console.log('Ошибка отправки:', error)
 		}
@@ -53,7 +64,31 @@ const ContactItem: FC<{ contact: IContact }> = ({ contact }) => {
 					<View style={{ backgroundColor: 'white', padding: 20 }}>
 						<View>
 							<Text>Введите сумму:</Text>
-							<TextInput value={sum} onChangeText={handleInputChange} />
+							<TextInput
+								style={styles.modalInput}
+								value={sum}
+								onChangeText={handleInputChange}
+							/>
+						</View>
+						<View style={{ marginTop: 12 }}>
+							<Text>Выберите вашу карту:</Text>
+							<View>
+								{accounts.map(account => (
+									<TouchableOpacity
+										key={account._id}
+										onPress={() => setFromAccount(account)}
+									>
+										<View
+											style={{ flexDirection: 'row', alignItems: 'center' }}
+										>
+											<Text>{account.cardNumber}</Text>
+											{fromAccount.cardNumber === account.cardNumber && (
+												<Text>(Выбрана)</Text>
+											)}
+										</View>
+									</TouchableOpacity>
+								))}
+							</View>
 						</View>
 						<Button onPress={handleSubmit} title='Перевести' />
 						<Button

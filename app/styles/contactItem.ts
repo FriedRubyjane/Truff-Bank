@@ -11,4 +11,10 @@ export const styles = StyleSheet.create({
 		fontSize: 12,
 		lineHeight: 16,
 	},
+	modalInput: {
+		borderStyle: 'solid',
+		borderWidth: 2,
+		borderRadius: 5,
+		borderColor: 'rgb(253 224 71)',
+	},
 })
