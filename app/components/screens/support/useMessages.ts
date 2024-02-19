@@ -1,17 +1,30 @@
 import dayjs from 'dayjs'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import {
+	collection,
+	onSnapshot,
+	orderBy,
+	query,
+	where,
+} from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { db } from '../../../firebase'
+import { useAuth } from '../../../hooks/useAuth'
 import { IMessage } from './types'
 
 export const useMessages = () => {
+	const { user } = useAuth()
+
 	const [messages, setMessages] = useState<IMessage[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(
 		() =>
 			onSnapshot(
-				query(collection(db, 'messages'), orderBy('timestamp', 'asc')),
+				query(
+					collection(db, 'messages'),
+					where('userId', '==', user?.uid),
+					orderBy('timestamp', 'asc')
+				),
 				snapshot => {
 					setMessages(
 						snapshot.docs.map(d =>
