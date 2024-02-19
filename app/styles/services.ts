@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
 		margin: 'auto',
 	},
 	text: {
-		marginTop: 25,
+		marginTop: 20,
 		fontSize: 18,
 		lineHeight: 28,
 		marginBottom: 24,

@@ -53,7 +53,7 @@ export const services: IService[] = [
 	},
 	{
 		iconName: 'print',
-		title: 'Принты',
+		title: 'Документы',
 		percent: 25,
 	},
 	{
