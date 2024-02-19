@@ -7,7 +7,8 @@ import { IMessage } from './types'
 const Message: FC<{ message: IMessage }> = ({ message }) => {
 	const { user } = useAuth()
 
-	const isMessageByAuthUser = user?.uid === message.userId
+	const isMessageByAuthUser =
+		user?.uid === message.userId && 'user' === message.role
 
 	return (
 		<View

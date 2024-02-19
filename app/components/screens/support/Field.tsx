@@ -17,6 +17,7 @@ const Field: FC = () => {
 				timestamp: serverTimestamp(),
 				userId: user?.uid,
 				text: message,
+				role: 'user',
 			})
 		} catch (error: any) {
 			console.log('Ошибка отправки сообщения:', error)
