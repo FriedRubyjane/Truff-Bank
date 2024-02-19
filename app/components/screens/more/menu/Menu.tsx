@@ -1,10 +1,14 @@
 import React, { FC } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import MenuItem from './MenuItem'
+import { menu } from './list'
 
 const Menu: FC = () => {
 	return (
 		<View>
-			<Text>Menu</Text>
+			{menu.map(item => (
+				<MenuItem key={item.title} item={item} />
+			))}
 		</View>
 	)
 }
