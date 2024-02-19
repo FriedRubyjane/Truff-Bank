@@ -8,6 +8,7 @@ import {
 	View,
 } from 'react-native'
 import { styles } from '../../../../styles/contactItem'
+import { stylesModal } from '../../../../styles/modal'
 import Avatar from '../../../ui/Avatar'
 import Button from '../../../ui/Button'
 import { IAccount } from '../../home/accounts/types'
@@ -53,15 +54,8 @@ const ContactItem: FC<{ contacts: IContact[]; accounts: IAccount[] }> = ({
 					setModalVisible(!modalVisible)
 				}}
 			>
-				<View
-					style={{
-						flex: 1,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'rgba(0,0,0,0.5)',
-					}}
-				>
-					<View style={{ backgroundColor: 'white', padding: 20 }}>
+				<View style={stylesModal.backGround}>
+					<View style={stylesModal.wrapper}>
 						<View>
 							<Text>Введите сумму:</Text>
 							<TextInput
@@ -93,20 +87,25 @@ const ContactItem: FC<{ contacts: IContact[]; accounts: IAccount[] }> = ({
 						<View style={{ marginTop: 12 }}>
 							<Text>На карту другого пользователя:</Text>
 							<View>
-								{contacts.map(contact => (
-									<TouchableOpacity
-										key={contact._id}
-										onPress={() => setWhereCard(contact)}
-									>
-										<View
-											style={{ flexDirection: 'row', alignItems: 'center' }}
-										>
-											<Text>{contact.cardNumber}</Text>
-											{whereCard.cardNumber === contact.cardNumber && (
-												<Text>(Выбрана)</Text>
+								{contacts.map((contact, index) => (
+									<View key={contact._id}>
+										<TouchableOpacity onPress={() => setWhereCard(contact)}>
+											{fromAccount.currency === contact.currency && (
+												<View
+													style={{ flexDirection: 'row', alignItems: 'center' }}
+												>
+													<Text>{contact.cardNumber}</Text>
+													{whereCard.cardNumber === contact.cardNumber && (
+														<Text>(Выбрана)</Text>
+													)}
+												</View>
 											)}
-										</View>
-									</TouchableOpacity>
+										</TouchableOpacity>
+										{fromAccount.currency !== contact.currency &&
+											index === 0 && (
+												<Text>У пользователя нет карт с этой валютой</Text>
+											)}
+									</View>
 								))}
 							</View>
 						</View>

@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react'
 import { Modal, Text, TouchableOpacity, View } from 'react-native'
 import { db } from '../../../../firebase'
 import { useAuth } from '../../../../hooks/useAuth'
+import { stylesModal } from '../../../../styles/modal'
 import { getRandomCardNumber } from '../../../../utils/getRandomCardNumber'
 import Button from '../../../ui/Button'
 
@@ -55,15 +56,8 @@ const ApplyNewProduct: FC = () => {
 					setModalVisible(!modalVisible)
 				}}
 			>
-				<View
-					style={{
-						flex: 1,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'rgba(0,0,0,0.5)',
-					}}
-				>
-					<View style={{ backgroundColor: 'white', padding: 20 }}>
+				<View style={stylesModal.backGround}>
+					<View style={stylesModal.wrapper}>
 						<View>
 							<Text>Выберите валюту:</Text>
 							<TouchableOpacity onPress={() => setCurrency('RUB')}>
