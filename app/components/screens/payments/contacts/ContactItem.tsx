@@ -87,7 +87,7 @@ const ContactItem: FC<{ contacts: IContact[]; accounts: IAccount[] }> = ({
 						<View style={{ marginTop: 12 }}>
 							<Text>На карту другого пользователя:</Text>
 							<View>
-								{contacts.map((contact, index) => (
+								{contacts.map(contact => (
 									<View key={contact._id}>
 										<TouchableOpacity onPress={() => setWhereCard(contact)}>
 											{fromAccount.currency === contact.currency && (
@@ -101,10 +101,6 @@ const ContactItem: FC<{ contacts: IContact[]; accounts: IAccount[] }> = ({
 												</View>
 											)}
 										</TouchableOpacity>
-										{fromAccount.currency !== contact.currency &&
-											index === 0 && (
-												<Text>У пользователя нет карт с этой валютой</Text>
-											)}
 									</View>
 								))}
 							</View>
