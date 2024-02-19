@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
 		marginRight: 8,
 	},
 	titleText: {
-		fontSize: 14,
+		fontSize: 15,
 		lineHeight: 20,
 		color: 'rgb(31 41 55)',
 		fontWeight: '500',
