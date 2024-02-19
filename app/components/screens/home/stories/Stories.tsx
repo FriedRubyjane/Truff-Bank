@@ -14,7 +14,11 @@ const Stories: FC = () => {
 				{isLoading ? (
 					<Loader />
 				) : (
-					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+					<ScrollView
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						style={{ paddingRight: 16 }}
+					>
 						{stories.map(story => (
 							<StoryItem key={story._id} story={story} />
 						))}
